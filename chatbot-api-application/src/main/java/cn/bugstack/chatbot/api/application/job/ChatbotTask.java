@@ -1,17 +1,11 @@
 package cn.bugstack.chatbot.api.application.job;
 
 import cn.bugstack.chatbot.api.domain.ai.IOpenAI;
-import cn.bugstack.chatbot.api.domain.zsxq.model.aggregates.UnansweredCommentAggregates;
 import cn.bugstack.chatbot.api.domain.zsxq.model.vo.Comment;
 import cn.bugstack.chatbot.api.domain.zsxq.service.ZsxqApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -20,25 +14,37 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@EnableScheduling
-@Configuration
-public class ChatbotSchedule {
-    Logger logger = LoggerFactory.getLogger(ChatbotSchedule.class);
-    @Value("${chatbot-api.cookie}")
+public class ChatbotTask implements Runnable{
+
+    Logger logger = LoggerFactory.getLogger(ChatbotTask.class);
+
     private String cookie;
 
-    @Value("${chatbot-api.commentable_id}")
+    private String groupName;
+
     private long commentable_id;
 
-    @Resource
     private ZsxqApi zsxqApi;
 
-    @Resource
     private IOpenAI openAI;
 
-    @Scheduled(cron = "0 0/1 * * * ?")
-//    @Scheduled(cron = "0/5 * * * * ?")
-    public void run() throws IOException {
+    private String openAiUrl;
+
+    private String openAiKey;
+
+    public ChatbotTask(String openAiUrl, String groupName, String cookie, long commentable_id, String openAiKey, ZsxqApi zsxqApi, IOpenAI openAI) {
+        this.openAiUrl = openAiUrl;
+        this.groupName = groupName;
+        this.cookie = cookie;
+        this.commentable_id = commentable_id;
+        this.openAiKey = openAiKey;
+        this.zsxqApi = zsxqApi;
+        this.openAI = openAI;
+    }
+
+
+    @Override
+    public void run() {
         if(new Random().nextBoolean()) {
             logger.info("随机打烊中..");
             return;
@@ -49,7 +55,12 @@ public class ChatbotSchedule {
             logger.info("打烊时间不工作，AI 下班了!");
             return;
         }
-        List<Comment> comments = zsxqApi.queryUnansweredComments(commentable_id, cookie);
+        List<Comment> comments = null;
+        try {
+            comments = zsxqApi.queryUnansweredComments(commentable_id, cookie);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (comments.isEmpty() || comments.size() == 0) {
             logger.info("没有未回答的问题!");
@@ -72,7 +83,12 @@ public class ChatbotSchedule {
             String matchedContent = matcher.group(1);
             logger.info("匹配到的评论文本: " + matchedContent);
             // ai回答
-            String gptReply = openAI.doChatGpt(matchedContent);
+            String gptReply = null;
+            try {
+                gptReply = openAI.doChatGpt(openAiUrl, openAiKey, matchedContent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             logger.info("gpt 答案: {}", gptReply);
             // 问题回复
             boolean res = zsxqApi.setGptAnswer(commentable_id, (long) comment.getId(), comment.getUser_id(),gptReply,cookie);

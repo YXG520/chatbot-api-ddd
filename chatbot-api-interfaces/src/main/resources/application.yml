@@ -1,11 +1,20 @@
 server:
   port: 8090
 
+  # 分组任务配置
 chatbot-api:
-#  cookie: "receive-cookie-deprecation=1; lang=zh-cn; _uab_collina=171273651984528152675161; _yuque_session=jK7lMKFZjjeZOJbSP_HaXxtNj3rKtEszODgJcR3IfrJ7aAFj9B_FYCmBfS4dH-zt27_-1YPNlDqi6nlTAn8_BQ==; tfstk=fbOZsRNJnfhZCBJcYM1VYNTTZT1Oi_nS_IsfoEYc5Gjg15ZDLFTP5Rg9oi-2AMCffC963Pde4SNsXAL0gs1mV0GSNFUOMsmWJFS0slQlylcfmGYhgMDs10GSNFDGWsTnVqHMVCsAosbGnsfn8a7ViSbMmMXhraZGisxD-27Vo52GIt23-NGPGKpu5Z6iX1-DScgIp9skSGY6zBD5CRLdYJyeTdBNqjSUiSAF7eQfugPrhgvRfTsJxXNNgeb2YT9Z45-2oUpcLIri53YDXB5OaxgOUpvBFOJEjSSB1ZWli9z0ie5DItAVZbqFJpY6nCKauSb91Q6V29u0Mt1HNTvkbr3J-1bDDTdj25IMoUdJF_la2NJHz6SrnoQn-cAvQo2VIwQFV2u3FqNWyrPQSLeYHOnh8ggG9-eAIwQFV2uUH-B9KwSSS6C..; yuque_ctoken=hf1ufn4x60v1ih06obgr0mhxlukqaaf7; current_theme=default; aliyungf_tc=c3a9b4f26c035f52da729d7f8be1ea4b33dcf827a7e7f4ea063667bf7a938be1; acw_tc=ac11000117174716467932967e4d7d7c09a7c784630c3b6b251230e16b86cf"
-  cookie: "receive-cookie-deprecation=1; lang=zh-cn; _uab_collina=171273651984528152675161; _yuque_session=jK7lMKFZjjeZOJbSP_HaXxtNj3rKtEszODgJcR3IfrJ7aAFj9B_FYCmBfS4dH-zt27_-1YPNlDqi6nlTAn8_BQ==; tfstk=fbOZsRNJnfhZCBJcYM1VYNTTZT1Oi_nS_IsfoEYc5Gjg15ZDLFTP5Rg9oi-2AMCffC963Pde4SNsXAL0gs1mV0GSNFUOMsmWJFS0slQlylcfmGYhgMDs10GSNFDGWsTnVqHMVCsAosbGnsfn8a7ViSbMmMXhraZGisxD-27Vo52GIt23-NGPGKpu5Z6iX1-DScgIp9skSGY6zBD5CRLdYJyeTdBNqjSUiSAF7eQfugPrhgvRfTsJxXNNgeb2YT9Z45-2oUpcLIri53YDXB5OaxgOUpvBFOJEjSSB1ZWli9z0ie5DItAVZbqFJpY6nCKauSb91Q6V29u0Mt1HNTvkbr3J-1bDDTdj25IMoUdJF_la2NJHz6SrnoQn-cAvQo2VIwQFV2u3FqNWyrPQSLeYHOnh8ggG9-eAIwQFV2uUH-B9KwSSS6C..; yuque_ctoken=hf1ufn4x60v1ih06obgr0mhxlukqaaf7; current_theme=default; aliyungf_tc=c3a9b4f26c035f52da729d7f8be1ea4b33dcf827a7e7f4ea063667bf7a938be1; acw_tc=ac11000117174734484406498e489dfdf63bcfd65297b9ae8a84e208513fc5"
-  commentable_id: 169484218
-
-openai:
-  API_URL: "https://api.openai.com/v1/chat/completions"
-  #  API_KEY: "${xxxxax}"
+  launchList: group01,group02 # 启动几组，就配置几组
+  group01:
+    groupName: ChatGPT AI 问答助手
+    groupId: 169484218 # 文档ID
+    cookie:  "receive-cookie-deprecation=1; lang=zh-cn; _uab_collina=171273651984528152675161; _yuque_session=jK7lMKFZjjeZOJbSP_HaXxtNj3rKtEszODgJcR3IfrJ7aAFj9B_FYCmBfS4dH-zt27_-1YPNlDqi6nlTAn8_BQ==; tfstk=fbOZsRNJnfhZCBJcYM1VYNTTZT1Oi_nS_IsfoEYc5Gjg15ZDLFTP5Rg9oi-2AMCffC963Pde4SNsXAL0gs1mV0GSNFUOMsmWJFS0slQlylcfmGYhgMDs10GSNFDGWsTnVqHMVCsAosbGnsfn8a7ViSbMmMXhraZGisxD-27Vo52GIt23-NGPGKpu5Z6iX1-DScgIp9skSGY6zBD5CRLdYJyeTdBNqjSUiSAF7eQfugPrhgvRfTsJxXNNgeb2YT9Z45-2oUpcLIri53YDXB5OaxgOUpvBFOJEjSSB1ZWli9z0ie5DItAVZbqFJpY6nCKauSb91Q6V29u0Mt1HNTvkbr3J-1bDDTdj25IMoUdJF_la2NJHz6SrnoQn-cAvQo2VIwQFV2u3FqNWyrPQSLeYHOnh8ggG9-eAIwQFV2uUH-B9KwSSS6C..; yuque_ctoken=hf1ufn4x60v1ih06obgr0mhxlukqaaf7; current_theme=default; aliyungf_tc=c3a9b4f26c035f52da729d7f8be1ea4b33dcf827a7e7f4ea063667bf7a938be1; acw_tc=ac11000117174734484406498e489dfdf63bcfd65297b9ae8a84e208513fc5"# 知识星球个人cookie信息
+    openAiUrl: "https://api.openai.com/v1/chat/completions"
+    openAiKey:  "" # 自行申请 https://beta.openai.com/overview 或者联系小傅哥 fustack 付费申请【购买虚拟号码等需要支付】。
+    cronExpression: 0/5 * * * * ? # 执行的频次配置，参考：cron.qqe2.com
+  group02:
+    groupName: DDD架构
+    groupId: 171541207 # 文档ID
+    cookie:  "receive-cookie-deprecation=1; lang=zh-cn; _uab_collina=171273651984528152675161; _yuque_session=jK7lMKFZjjeZOJbSP_HaXxtNj3rKtEszODgJcR3IfrJ7aAFj9B_FYCmBfS4dH-zt27_-1YPNlDqi6nlTAn8_BQ==; tfstk=fbOZsRNJnfhZCBJcYM1VYNTTZT1Oi_nS_IsfoEYc5Gjg15ZDLFTP5Rg9oi-2AMCffC963Pde4SNsXAL0gs1mV0GSNFUOMsmWJFS0slQlylcfmGYhgMDs10GSNFDGWsTnVqHMVCsAosbGnsfn8a7ViSbMmMXhraZGisxD-27Vo52GIt23-NGPGKpu5Z6iX1-DScgIp9skSGY6zBD5CRLdYJyeTdBNqjSUiSAF7eQfugPrhgvRfTsJxXNNgeb2YT9Z45-2oUpcLIri53YDXB5OaxgOUpvBFOJEjSSB1ZWli9z0ie5DItAVZbqFJpY6nCKauSb91Q6V29u0Mt1HNTvkbr3J-1bDDTdj25IMoUdJF_la2NJHz6SrnoQn-cAvQo2VIwQFV2u3FqNWyrPQSLeYHOnh8ggG9-eAIwQFV2uUH-B9KwSSS6C..; yuque_ctoken=hf1ufn4x60v1ih06obgr0mhxlukqaaf7; current_theme=default; aliyungf_tc=c3a9b4f26c035f52da729d7f8be1ea4b33dcf827a7e7f4ea063667bf7a938be1; acw_tc=ac11000117174734484406498e489dfdf63bcfd65297b9ae8a84e208513fc5" # 知识星球个人cookie信息
+    openAiUrl: "https://api.openai.com/v1/chat/completions"
+    openAiKey:  "" # 自行申请 https://beta.openai.com/overview 或者联系小傅哥 fustack 付费申请【购买虚拟号码等需要支付】。
+    cronExpression: "0/5 * * * * ?" # 执行的频次配置，参考：cron.qqe2.com

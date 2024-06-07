@@ -15,7 +15,7 @@ import java.io.IOException;
 @org.springframework.boot.test.context.SpringBootTest
 public class GptTest2 {
 
-    private Logger logger = LoggerFactory.getLogger(GptTest2.class);
+    private final Logger logger = LoggerFactory.getLogger(GptTest2.class);
     @Value("${chatbot-api.cookie}")
     private String cookie;
 
@@ -27,12 +27,6 @@ public class GptTest2 {
 
     @Resource
     private IOpenAI openAI;
-
-    @Test
-    public void testOpenAI() throws IOException {
-        String res = openAI.doChatGpt("帮我写一个冒泡排序");
-        logger.info("res: {}", res);
-    }
 
 //    private static final String API_URL = "https://api.openai.com/v1/chat/completions";
 //    private static final String API_KEY = ""; // 替换为您的API密钥

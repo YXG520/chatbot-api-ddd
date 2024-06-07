@@ -85,5 +85,11 @@
             <artifactId>chatbot-api-domain</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>cn.bugstack.ai</groupId>
+            <artifactId>chatbot-api-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
