@@ -37,7 +37,7 @@ public class ChatbotSchedule {
     private IOpenAI openAI;
 
     @Scheduled(cron = "0 0/1 * * * ?")
-    @Scheduled(cron = "0/5 * * * * ?")
+//    @Scheduled(cron = "0/5 * * * * ?")
     public void run() throws IOException {
         if(new Random().nextBoolean()) {
             logger.info("随机打烊中..");
