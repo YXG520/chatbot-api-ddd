@@ -14,7 +14,8 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ChatbotTask implements Runnable{
+@TaskType("yuque-chatbot")
+public class ChatbotTask implements Runnable, Task{
 
     Logger logger = LoggerFactory.getLogger(ChatbotTask.class);
 
@@ -31,6 +32,7 @@ public class ChatbotTask implements Runnable{
     private String openAiUrl;
 
     private String openAiKey;
+
 
     public ChatbotTask(String openAiUrl, String groupName, String cookie, long commentable_id, String openAiKey, ZsxqApi zsxqApi, IOpenAI openAI) {
         this.openAiUrl = openAiUrl;

@@ -1,6 +1,7 @@
 package cn.bugstack.chatbot.api.application.ext;
 
 import cn.bugstack.chatbot.api.application.job.ChatbotTask;
+import cn.bugstack.chatbot.api.application.job.Task;
 import cn.bugstack.chatbot.api.common.PropertyUtil;
 import cn.bugstack.chatbot.api.domain.ai.IOpenAI;
 import cn.bugstack.chatbot.api.domain.zsxq.IZsxqApi;
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 import javax.annotation.Resource;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -33,7 +35,7 @@ public class TaskRegistrarAutoConfig implements EnvironmentAware, SchedulingConf
     private Logger logger = LoggerFactory.getLogger(TaskRegistrarAutoConfig.class);
 
     /**
-     * 任务配置组
+     * 任务配置组,testtest
      */
     private Map<String, Map<String, Object>> taskGroupMap = new HashMap<>();
 
@@ -64,8 +66,19 @@ public class TaskRegistrarAutoConfig implements EnvironmentAware, SchedulingConf
             String openAiKey = taskGroup.get("openAiKey").toString();
             String cronExpressionBase64 = taskGroup.get("cronExpression").toString();
             String openAiUrl =  taskGroup.get("openAiUrl").toString();
+            String taskType = taskGroup.get("taskType").toString();
+            String taskInstancePath = taskGroup.get("taskInstancePath").toString();
             logger.info("创建任务 groupName：{} groupId：{} cronExpression：{}", groupName, commentable_id, cronExpressionBase64);
             // 添加任务
+            if (taskInstancePath != null) {
+                try {
+                    // 使用反射根据类的全限定名创建实例
+                    Class<?> clazz = Class.forName(taskInstancePath);
+                    Task task = (Task) clazz.getDeclaredConstructor().newInstance();
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
             taskRegistrar.addCronTask(new ChatbotTask(openAiUrl, groupName, cookie, commentable_id, openAiKey, (ZsxqApi) zsxqApi, openAI), cronExpressionBase64);
         }
     }
